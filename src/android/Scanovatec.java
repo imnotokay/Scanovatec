@@ -127,7 +127,7 @@ public class Scanovatec extends CordovaPlugin {
         json += " 'NumberPhone': '" + response.getNumberPhone() + "',";
         json += " 'DactilarCode': '" + response.getDactilarCode() + "',";
         json += "'ResponseControlList': " + (response.getReponseControlList() == null ? "false" : (response.getReponseControlList() ? "true" : "false")) + ",";
-        json += " 'Response_ANI': '" + response.getResponse_ANI() + "',";
+        json += " 'Response_ANI': '" + response.getResponse_ANI() + "'";
         json += "}";
 
         return json;
