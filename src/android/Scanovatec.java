@@ -1,4 +1,4 @@
-package cordova-plugin-scanovatec;
+package cordova.plugin.scanovatec;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
