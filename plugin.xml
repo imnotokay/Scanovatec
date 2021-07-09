@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-scanovatec" version="0.0.2">
+   <name>Scanovatec</name>
+   <js-module name="Scanovatec" src="www/Scanovatec.js">
+      <clobbers target="cordova.plugins.Scanovatec" />
+   </js-module>
+   <platform name="android">
+      <config-file parent="/*" target="res/xml/config.xml">
+         <feature name="Scanovatec">
+            <param name="android-package" value="cordova.plugin.scanovatec.Scanovatec" />
+         </feature>
+      </config-file>
+      <config-file parent="/*" target="AndroidManifest.xml" />
+      <source-file src="src/android/Scanovatec.java" target-dir="src/cordova-plugin-scanovatec/Scanovatec" />
+   </platform>
+</plugin>

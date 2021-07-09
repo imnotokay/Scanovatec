@@ -1,0 +1,18 @@
+{
+  "name": "scanovatec",
+  "version": "1.0.0",
+  "description": "Plugin para la conexión de ionic con el sdk de ado android",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ado",
+    "sixdegreesit",
+    "six",
+    "degrees",
+    "it"
+  ],
+  "author": "Six Degrees IT",
+  "license": "ISC"
+}
