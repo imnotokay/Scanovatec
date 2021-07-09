@@ -45,7 +45,8 @@ public class Scanovatec extends CordovaPlugin {
                 ScanovateSdk.start(this.cordova.getActivity(),
                 param1, param2, param3, param4, param5, param6, param7, param8, param9, new ScanovateHandler(){
                     public void onSuccess(CloseResponse response, int code, String uuidDevice) {
-                        context.success(response.getTransactionId());
+                        String jsonObject = convertToJson(response);
+                        evaluateTransaction(response.getTransactionId(), jsonObject, context);
                     }
 
                      @Override
@@ -62,13 +63,13 @@ public class Scanovatec extends CordovaPlugin {
         }
     }
 
-    private void evaluateTransaction(String transactionId, CallbackContext context) {
+    private void evaluateTransaction(String transactionId, String jsonObject, CallbackContext context) {
         
         RetrofitClient retrofitClient = new RetrofitClient();
         retrofitClient.validateTransaction("avistaqa", transactionId, new ApiHelper.ValidateTransactionHandler() {
             @Override
             public void onSuccess(String stateName) {
-                context.success(stateName);
+                context.success(jsonObject);
             }
 
             @Override
@@ -81,5 +82,54 @@ public class Scanovatec extends CordovaPlugin {
                 context.error("Resultado de Transacción: Algo fallo al momento de consultar la transaccion");
             }
         }, this.cordova.getActivity());
+    }
+    
+    private String convertToJson(CloseResponse response){
+        String json = "{";
+        json += " 'Uid': '" + response.getUid() + "',";
+        json += " 'StartingDate': '" + response.getStartingDate() + "',";
+        json += " 'CreationDate': '" + response.getCreationDate() + "',";
+        json += " 'CreationIP': '" + response.getCreationIP() + "',";
+        json += " 'DocumentType': '" + response.getDocumentType() + "',";
+        json += " 'IdNumber': '" + response.getIdNumber() + "',";
+        json += " 'FirstName': '" + response.getFirstName() + "',";
+        json += " 'SecondName': '" + response.getSecondName() + "',";
+        json += " 'FirstSurname': '" + response.getFirstSurname() + "',";
+        json += " 'SecondSurname': '" + response.getSecondSurname() + "',";
+        json += " 'Gender': '" + response.getGender() + "',";
+        json += " 'BirthDate': '" + response.getBirthDate() + "',";
+        json += " 'Street': '" + response.getStreet() + "',";
+        json += " 'CedulateCondition': '" + response.getCedulateCondition() + "',";
+        json += " 'Spouse': '" + response.getSpouse() + "',";
+        json += " 'Home': '" + response.getHome() + "',";
+        json += " 'MaritalStatus': '" + response.getMaritalStatus() + "',";
+        json += " 'DateOfIdentification': '" + response.getDateOfIdentification() + "',";
+        json += " 'DateOfDeath': '" + response.getDateOfDeath() + "',";
+        json += " 'MarriageDate': '" + response.getMarriageDate() + "',";
+        json += " 'Instruction': '" + response.getInstruction() + "',";
+        json += " 'PlaceBirth': '" + response.getPlaceBirth() + "',";
+        json += " 'Nationality': '" + response.getNationality() + "',";
+        json += " 'MotherName': '" + response.getMotherName() + "',";
+        json += " 'FatherName': '" + response.getFatherName() + "',";
+        json += " 'HouseNumber': '" + response.getHouseNumber() + "',";
+        json += " 'Profession': '" + response.getProfession() + "',";
+        json += " 'ExpeditionCity': '" + response.getExpeditionCity() + "',";
+        json += " 'ExpeditionDepartment': '" + response.getExpeditionDepartment() + "',";
+        json += " 'BirthCity': '" + response.getBirthCity() + "',";
+        json += " 'BirthDepartment': '" + response.getBirthDepartment() + "',";
+        json += " 'TransactionType': '" + response.getTransactionType() + "',";
+        json += " 'TransactionTypeName': '" + response.getTransactionTypeName() + "',";
+        json += " 'IssueDate': '" + response.getIssueDate() + "',";
+        json += " 'AdoProjectId': '" + response.getAdoProjectId() + "',";
+        json += " 'TransactionId': '" + response.getTransactionId() + "',";
+        json += " 'ProductId': '" + response.getProductId() + "',";
+        json += " 'Extras': { 'additionalPro1': '" + response.getExtras().getAdditionalProp1() + "','additionalProp2':'" + response.getExtras().getAdditionalProp2() + "', 'additionalProp3': '" + response.getExtras().getAdditionalProp3() + "', 'IdState': '" + response.getExtras().getIdState() + "', 'StateName': '" + response.getExtras().getStateName() + "' }";
+        json += " 'NumberPhone': '" + response.getNumberPhone() + "',";
+        json += " 'DactilarCode': '" + response.getDactilarCode() + "',";
+        json += " 'ReponseControlList': " + (response.getReponseControlList() ? "true" : "false") + ",";
+        json += " 'Response_ANI': '" + response.getResponse_ANI() + "',";
+        json += "}";
+
+        return json;
     }
 }
