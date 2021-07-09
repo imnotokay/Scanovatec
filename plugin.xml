@@ -2,17 +2,25 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" 
 xmlns:android="http://schemas.android.com/apk/res/android" 
 id="cordova-plugin-scanovatec" version="0.0.2">
-   <name>Scanovatec</name>
-   <js-module name="Scanovatec" src="www/Scanovatec.js">
-      <clobbers target="Scanovatec" />
-   </js-module>
-   <platform name="android">
-      <config-file parent="/*" target="res/xml/config.xml">
-         <feature name="Scanovatec">
-            <param name="android-package" value="cordova.plugin.scanovatec.Scanovatec" />
-         </feature>
-      </config-file>
-      <config-file parent="/*" target="AndroidManifest.xml" />
-      <source-file src="src/android/Scanovatec.java" target-dir="src/cordova-plugin-scanovatec/Scanovatec" />
-   </platform>
+    <name>Scanovatec</name>
+    <js-module name="Scanovatec" src="www/Scanovatec.js">
+        <clobbers target="Scanovatec" />
+    </js-module>
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="Scanovatec">
+                <param name="android-package" value="cordova.plugin.scanovatec.Scanovatec" />
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml">
+            <uses-permission android:name="android.permission.CAMERA"/>
+            <uses-feature android:name="android.hardware.camera"/>
+            <uses-feature android:name="android.hardware.camera.autofocus"/>    
+		</config-file>
+        <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
+        <source-file src="src/android/Scanovatec.java" target-dir="src/cordova-plugin-scanovatec/Scanovatec" />
+        <resource-file src="src/android/libScanovateImagingHybridLiveness_2_2_6.aar" target="./libs/libScanovateImagingHybridLiveness_2_2_6.aar" />
+		<resource-file src="src/android/scanovate_colombia_2_2_3.aar" target="./libs/scanovate_colombia_2_2_3.aar" />
+		<resource-file src="src/android/ScanovateManualCapture_1_0_7.aar" target="./libs/ScanovateManualCapture_1_0_7.aar" />
+    </platform>
 </plugin>
