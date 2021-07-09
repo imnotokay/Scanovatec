@@ -123,7 +123,7 @@ public class Scanovatec extends CordovaPlugin {
         json += " 'AdoProjectId': '" + response.getAdoProjectId() + "',";
         json += " 'TransactionId': '" + response.getTransactionId() + "',";
         json += " 'ProductId': '" + response.getProductId() + "',";
-        json += " 'Extras': { 'additionalPro1': '" + response.getExtras().getAdditionalProp1() + "','additionalProp2':'" + response.getExtras().getAdditionalProp2() + "', 'additionalProp3': '" + response.getExtras().getAdditionalProp3() + "', 'IdState': '" + response.getExtras().getIdState() + "', 'StateName': '" + response.getExtras().getStateName();
+        json += " 'Extras': { 'additionalPro1': '" + response.getExtras().getAdditionalProp1() + "','additionalProp2':'" + response.getExtras().getAdditionalProp2() + "', 'additionalProp3': '" + response.getExtras().getAdditionalProp3() + "', 'IdState': '" + response.getExtras().getIdState() + "', 'StateName': '" + response.getExtras().getStateName() + "' }";
         json += " 'NumberPhone': '" + response.getNumberPhone() + "',";
         json += " 'DactilarCode': '" + response.getDactilarCode() + "',";
         json += "'ResponseControlList': " + (response.getReponseControlList() == null ? "false" : (response.getReponseControlList() ? "true" : "false")) + ",";
