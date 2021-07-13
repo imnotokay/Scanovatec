@@ -24,6 +24,9 @@ public class Scanovatec extends CordovaPlugin {
         if (action.equals("start")) {
             this.start(args, callbackContext);
             return true;
+        }else if (action.equals("evaluateTransaction")){
+            this.evaluateTransaction(args, callbackContext);
+            return true;
         }
         return false;
     }
@@ -46,7 +49,7 @@ public class Scanovatec extends CordovaPlugin {
                 param1, param2, param3, param4, param5, param6, param7, param8, param9, new ScanovateHandler(){
                     public void onSuccess(CloseResponse response, int code, String uuidDevice) {
                         String jsonObject = convertToJson(response);
-                        evaluateTransaction(response.getTransactionId(), jsonObject, context);
+                        evaluateTransaction(response.getTransactionId(), param3, jsonObject, context);
                     }
 
                      @Override
@@ -62,11 +65,33 @@ public class Scanovatec extends CordovaPlugin {
             context.error("Debe ingresar los argumentos necesarios para continuar");
         }
     }
+    
+    private void evaluate(JSONArray args, CallbackContext context) {
+        String transactionId = args.getJSONObject(0).getString("transactionId");
+        String username = args.getJSONObject(0).getString("username");
+        RetrofitClient retrofitClient = new RetrofitClient();
+        retrofitClient.validateTransaction(username, transactionId, new ApiHelper.ValidateTransactionHandler() {
+            @Override
+            public void onSuccess(String stateName) {
+                context.success(stateName);
+            }
 
-    private void evaluateTransaction(String transactionId, String jsonObject, CallbackContext context) {
+            @Override
+            public void onConnectionFailed() {
+                context.error("Resultado de Transacción: Se ha perdido la conexión al momento de consultar la transacción");
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+                context.error("Resultado de Transacción: Algo fallo al momento de consultar la transaccion");
+            }
+        }, this.cordova.getActivity());
+    }
+
+    private void evaluateTransaction(String transactionId, String username, String jsonObject, CallbackContext context) {
         
         RetrofitClient retrofitClient = new RetrofitClient();
-        retrofitClient.validateTransaction("avistaqa", transactionId, new ApiHelper.ValidateTransactionHandler() {
+        retrofitClient.validateTransaction(username, transactionId, new ApiHelper.ValidateTransactionHandler() {
             @Override
             public void onSuccess(String stateName) {
                 context.success(jsonObject);
