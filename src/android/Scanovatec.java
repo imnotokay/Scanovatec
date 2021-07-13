@@ -67,25 +67,30 @@ public class Scanovatec extends CordovaPlugin {
     }
     
     private void evaluate(JSONArray args, CallbackContext context) {
-        String transactionId = args.getJSONObject(0).getString("transactionId");
-        String username = args.getJSONObject(0).getString("username");
-        RetrofitClient retrofitClient = new RetrofitClient();
-        retrofitClient.validateTransaction(username, transactionId, new ApiHelper.ValidateTransactionHandler() {
-            @Override
-            public void onSuccess(String stateName) {
-                context.success(stateName);
-            }
+        if(args != null){
+            String transactionId = args.getJSONObject(0).getString("transactionId");
+            String username = args.getJSONObject(0).getString("username");
+            RetrofitClient retrofitClient = new RetrofitClient();
+            retrofitClient.validateTransaction(username, transactionId, new ApiHelper.ValidateTransactionHandler() {
+                @Override
+                public void onSuccess(String stateName) {
+                    context.success(stateName);
+                }
 
-            @Override
-            public void onConnectionFailed() {
-                context.error("Resultado de Transacción: Se ha perdido la conexión al momento de consultar la transacción");
-            }
+                @Override
+                public void onConnectionFailed() {
+                    context.error("Resultado de Transacción: Se ha perdido la conexión al momento de consultar la transacción");
+                }
 
-            @Override
-            public void onFailure(int i, String s) {
-                context.error("Resultado de Transacción: Algo fallo al momento de consultar la transaccion");
-            }
-        }, this.cordova.getActivity());
+                @Override
+                public void onFailure(int i, String s) {
+                    context.error("Resultado de Transacción: Algo fallo al momento de consultar la transaccion");
+                }
+            }, this.cordova.getActivity());
+        }else{
+            context.error("Debe ingresar los argumentos necesarios para continuar");
+        }
+        
     }
 
     private void evaluateTransaction(String transactionId, String username, String jsonObject, CallbackContext context) {
