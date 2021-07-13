@@ -25,7 +25,7 @@ public class Scanovatec extends CordovaPlugin {
             this.start(args, callbackContext);
             return true;
         }else if (action.equals("evaluateTransaction")){
-            this.evaluateTransaction(args, callbackContext);
+            this.evaluate(args, callbackContext);
             return true;
         }
         return false;
