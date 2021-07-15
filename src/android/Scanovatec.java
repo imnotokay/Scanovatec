@@ -68,25 +68,31 @@ public class Scanovatec extends CordovaPlugin {
     
     private void evaluate(JSONArray args, CallbackContext context) {
         if(args != null){
-            String transactionId = args.getJSONObject(0).getString("transactionId");
-            String username = args.getJSONObject(0).getString("username");
-            RetrofitClient retrofitClient = new RetrofitClient();
-            retrofitClient.validateTransaction(username, transactionId, new ApiHelper.ValidateTransactionHandler() {
-                @Override
-                public void onSuccess(String stateName) {
-                    context.success(stateName);
-                }
+            try
+            {
+                String transactionId = args.getJSONObject(0).getString("transactionId");
+                String username = args.getJSONObject(0).getString("username");
+                RetrofitClient retrofitClient = new RetrofitClient();
+                retrofitClient.validateTransaction(username, transactionId, new ApiHelper.ValidateTransactionHandler() {
+                    @Override
+                    public void onSuccess(String stateName) {
+                        context.success(stateName);
+                    }
 
-                @Override
-                public void onConnectionFailed() {
-                    context.error("Resultado de Transacción: Se ha perdido la conexión al momento de consultar la transacción");
-                }
+                    @Override
+                    public void onConnectionFailed() {
+                        context.error("Resultado de Transacción: Se ha perdido la conexión al momento de consultar la transacción");
+                    }
 
-                @Override
-                public void onFailure(int i, String s) {
-                    context.error("Resultado de Transacción: Algo fallo al momento de consultar la transaccion");
-                }
-            }, this.cordova.getActivity());
+                    @Override
+                    public void onFailure(int i, String s) {
+                        context.error("Resultado de Transacción: Algo fallo al momento de consultar la transaccion");
+                    }
+                }, this.cordova.getActivity());
+            }catch(Exception ex){
+                context.error("Se ha presentado un error al ejecutar la acción 'evaluateTransaction', el detalle de la exepción a continuación: " + ex);
+            }
+            
         }else{
             context.error("Debe ingresar los argumentos necesarios para continuar");
         }
